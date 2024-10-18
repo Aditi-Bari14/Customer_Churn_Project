@@ -1,0 +1,180 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Customer Churn Prediction</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css" />
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css">
+    <style>
+        body {
+            font-family: sans-serif;
+            background-image: url(https://images.unsplash.com/photo-1462206092226-f46025ffe607?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=1353&q=80);
+            background-repeat: no-repeat;
+            background-size: 100% 100%;
+        }
+
+        #nav-bar {
+            margin-bottom: 20px;
+        }
+
+        .form-container {
+            background-color: #ffffff;
+            padding: 30px;
+            border-radius: 10px;
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
+        }
+
+        .contentform {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: space-between;
+        }
+
+        .form-group {
+            width: 100%;
+            margin-bottom: 15px;
+        }
+/* 
+        @media (min-width: 768px) {
+            .form-group {
+                width: 48%;
+            }
+        } */
+
+        .submit-btn {
+            background-image: linear-gradient(to right, #25aae1, #4481eb, #04befe, #3f86ed);
+            color: white;
+            border: none;
+        }
+
+        .submit-btn:hover {
+            background-image: linear-gradient(to right, #04befe, #3f86ed, #25aae1);
+        }
+
+        .alert {
+            margin-top: 20px;
+        }
+
+        .leftcontact, .rightcontact {
+            width: 45%;
+        }
+    </style>
+</head>
+
+<body>
+
+    <!-- Navbar Starts -->
+    <section id="nav-bar">
+        <nav class="navbar navbar-expand-lg navbar-light bg-light">
+            <a class="navbar-brand font-weight-bold" href="#" style="color:black;">APS BANK</a>
+            <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarNav">
+                <ul class="navbar-nav ml-auto">
+                    <li class="nav-item active">
+                        <a class="nav-link" href="#">Home <span class="sr-only">(current)</span></a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="#">Net Banking</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="#">Predictions</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="#">Contact</a>
+                    </li>
+                </ul>
+            </div>
+        </nav>
+    </section>
+    <!-- Navbar Ends -->
+
+    <!-- Form Section -->
+    <div class="container mt-5">
+        <div class="row justify-content-center">
+            <div class="col-md-8 form-container">
+                <h1 class="text-center mb-4">Enter the Information Below to Predict Customer Churn</h1>
+                <form action="{{ url_for('predict')}}" method="post">
+                    <div class="contentform">
+                        <div class="leftcontact">
+                            <div class="form-group">
+                                <p>Credit Score<span>*</span></p>
+                                <input name="CreditScore" type="number" class="form-control" required="required">
+                            </div>
+
+                            <div class="form-group">
+                                <p>Age<span>*</span></p>
+                                <input name="Age" type="number" class="form-control" required="required">
+                            </div>
+
+                            <div class="form-group">
+                                <p>Tenure<span>*</span></p>
+                                <input name="Tenure" type="number" class="form-control" required="required">
+                            </div>
+
+                            <div class="form-group">
+                                <p>Account Balance<span>*</span></p>
+                                <input name="Balance" type="number" step="0.01" class="form-control" required="required">
+                            </div>
+
+                            <div class="form-group">
+                                <p>Number of Products<span>*</span></p>
+                                <input name="NumOfProducts" type="number" class="form-control" required="required">
+                            </div>
+
+            
+                        </div>
+
+                        <div class="rightcontact">
+                            <div class="form-group">
+                                <p>Is Active Member (1=Yes, 0=No)<span>*</span></p>
+                                <input name="IsActiveMember" type="number" min="0" max="1" class="form-control" required="required">
+                            </div>
+
+                            <div class="form-group">
+                                <p>Estimated Salary<span>*</span></p>
+                                <input name="EstimatedSalary" type="number" step="0.01" class="form-control" required="required">
+                            </div>
+
+                            <div class="form-group">
+                                <p>Location<span>*</span></p>
+                                <select name="Geography" class="form-control" required="required">
+                                    <option value="Germany">Germany</option>
+                                    <option value="Spain">Spain</option>
+                                    <option value="France">France</option>
+                                </select>
+                            </div>
+
+                            <div class="form-group">
+                                <p>Gender<span>*</span></p>
+                                <select name="Gender" class="form-control" required="required">
+                                    <option value="Male">Male</option>
+                                    <option value="Female">Female</option>
+                                </select>
+                            </div>
+                            <div class="form-group">
+                                <p>Has Credit Card (1=Yes, 0=No)<span>*</span></p>
+                                <input name="HasCrCard" type="number" min="0" max="1" class="form-control" required="required">
+                            </div>
+                        </div>
+                    </div>
+
+                    <div style="width: 100%;display: flex;justify-content: center;align-items: center;margin-top: 10px;">
+                        <button type="submit" class="btn btn-lg submit-btn mb-5">Predict Customer Churn</button>
+
+                    </div>
+
+                </form>
+
+                {% if prediction_text %}
+                <h3 class="alert alert-primary text-center" role="alert">{{ prediction_text }}</h3>
+                {% endif %}
+            </div>
+        </div>
+    </div>
+
+</body>
+</html>
